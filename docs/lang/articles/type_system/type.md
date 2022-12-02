@@ -21,12 +21,9 @@ def test():
 - Line 4: `x` is reassigned a floating-point number 3.14 but takes the value 3. This is because 3.14 is automatically cast to integer 3 to match the type of `x`.
 - Line 5:  The system throws an error, because `ti.Vector` cannot be cast into an integer.
 
-Taichi's `ti.types` module defines all the supported data types, and they are classified into two categories: primitive types and compound types.
+Taichi's `ti.types` module defines all the supported data types, and they are classified into two categories: Primitive Types and Compound Types.
 
-- Primitive types refer to various commonly-used numerical data types, such as `ti.i32` (`int32`), `ti.u8` (`uint8`), and `ti.f64` (`float64`).
-- Compound types refer to various array-like or struct-like data types, including `ti.types.matrix`, `ti.types.ndarray`, and `ti.types.struct`. Compound types comprise multiple members of primitive types or of other compound types.
-
-## Primitive types
+## Primitive Types
 
 Primitive types refer to scalars, which are the smallest building blocks of compound types. Each primitive type is denoted with a character indicating its category followed by a number indicating its precision bits (number of bits for storing the data). The _category_ can be `i` (signed integers), `u` (unsigned integers), or `f` (floating-point numbers); the _precision bits_ can be `8`, `16`, `32`, or `64`. Following are the two most commonly used types:
 
@@ -45,7 +42,7 @@ Not all backends support Taichi's primitive types. See the following table for h
 
 > :o:: Requiring extensions for the backend.
 
-### Customize default primitive types
+### Customize default Primitive Types
 
 When initializing the Taichi runtime, Taichi automatically uses the following data types as the default primitive data types:
 
@@ -67,7 +64,7 @@ If you are working on a high-precision application scenario, such as numeric sim
 
 :::
 
-### Set default primitive type alias
+### Set default Primitive Type alias
 
 Taichi supports using `int` as the alias for the default integer type and `float` as the alias for the default floating-point type. For example, after changing the default primitive types to `i64` and `f64`, you can use `int` as the alias for `i64` and `float` as the alias for `f64`.
 
@@ -153,6 +150,7 @@ A few exceptions:
 - Logical operations return `i32`.
 - Comparison operations return `i32`.
 
+
 #### Implicit type casting in assignments
 
 When you assign a value to a variable of a different data type, Taichi implicitly casts the value into that type. Further, if the value is of a higher precision than the variable, a warning of precision loss will be printed.
@@ -177,17 +175,11 @@ When you assign a value to a variable of a different data type, Taichi implicitl
       print(a)  # 3
   ```
 
-## Compound types
+## Compound Types
 
-Compound types are user-defined data types, which comprise multiple elements. Supported compound types include vectors, matrices, ndarrays, and structs.
+Compound Types are user-defined data types, which comprise multiple elements. Supported compound types include vectors, matrices, [ndarrays](../basic/external.md), and structs.
 
 Taichi allows you to use all types supplied in the `ti.types` module as scaffolds to customize *higher-level* compound types.
-
-:::note
-
-The `ndarray` type is discussed in another document [interacting with External Arrays](../basic/external.md).
-
-:::
 
 
 ### Matrices and vectors
@@ -213,7 +205,7 @@ def test():
     print(length(v))
 ```
 
-In practical terms, `ti.types.matrix` only would suffice your need for vector/matrix customization because Taichi treats vectors as a special kind of matrices, i.e., matrices with one column.
+In practical terms, `ti.types.matrix` only would suffice your need for vector/matrix customization because Taichi treats vectors as a special kind of matrix, i.e., a matrix with one column.
 
 In fact, calling `ti.types.vector()` produces a matrix type of a single column:
 
@@ -228,7 +220,7 @@ v = ti.Vector([1, 1, 1])  # equivalent to v = ti.Matrix([[1], [1], [1]])
 ```
 
 
-### Struct types and dataclass
+### Struct Types and Dataclass
 
 You can use the funtion `ti.types.struct()` to create a struct type. Try customizing compound types to represent a sphere in the 3D space, which can be abstracted with its center and radius. In the following example, you call `ti.types.vector()` and `ti.types.struct()` to create compound types `vec3` and `sphere_type`, respectively. These two types are the *higher-level* compound types that fit better with your scenario. Subsequently, you can use them as templates to create two instances of spheres (initialize two local variables `sphere1` and `sphere2`):
 
